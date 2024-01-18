@@ -53,27 +53,58 @@ class Endpoint_MAC:
             Body_info = json.loads(Body_info)
             id = Body_info['ERSEndPoint']['id']
         return id
-    def __str__(self) :
-        return f"{self.mac}"
-        
-
-class Endpoint_id:
-    def __init__(self, id):
-        self.id = id
-
+    
+    
     def delete (self):
-        conn.request("DELETE", "/ers/config/endpoint/{}".format(id) , headers=headers)
+        conn.request("DELETE", "/ers/config/endpoint/{}".format(self.get_id()) , headers=headers)
         res = conn.getresponse()
         data = res.read()
 
+
+        print("Status: {}".format(res.status))
+        if res.status == 404:
+            print("no have mac {}".format(self.mac))
+        elif res.status == 204:
+            print('delete mac {}'.format(self.mac))
+        else:
+            print("Exception!!")
+
+    def __str__(self) :
+        return f"{self.mac}"
+        
+class internaluser:
+    
+    def __init__(self,MAC):
+        self.mac = MAC
+    def get_id (self):
+        conn.request("GET", "/ers/config/internaluser/name/{}".format(self.mac), headers=headers)
+        res = conn.getresponse()
+        data = res.read()
         print("Status: {}".format(res.status))
         print("Header:\n{}".format(res.headers))
         print("Body:\n{}".format(data.decode("utf-8")))
+
+        if data.decode("utf-8")=='':
+            return None
+        else:
+            Body_info = data.decode("utf-8")
+            Body_info = json.loads(Body_info)
+            id = Body_info['InternalUser']['id']
+        return id
+    def delete (self):
+        conn.request("DELETE", "/ers/config/internaluser/name/{}".format(self.mac) , headers=headers)
+        res = conn.getresponse()
+        data = res.read()
+
+
+        print("Status: {}".format(res.status))
+        if res.status == 404:
+            print("no have mac {}".format(self.mac))
+        elif res.status == 204:
+            print('delete mac {}'.format(self.mac))
+        else:
+            print("Exception!!")
+
     def __str__(self) :
-        return f"{self.id}"
-
-
-
-
-
+        return f"{self.mac}"
 
