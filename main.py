@@ -1,6 +1,9 @@
-from ISE_api_func import Endpoint_id, Endpoint_MAC
+from ISE_api_func import  Endpoint_MAC  , internaluser
 
-MAC = Endpoint_MAC('FF0000000000')
-id = MAC.get_id()
-print(id)
-delete = MAC.delete()
+MAC = "00FF00AABBCC"
+
+
+internaluser_MAC = internaluser(MAC)
+internaluser_MAC.delete()
+End_Mac = Endpoint_MAC(MAC)
+delete = End_Mac.delete()

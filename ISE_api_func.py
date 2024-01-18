@@ -42,11 +42,11 @@ class Endpoint_MAC:
         conn.request("GET", "/ers/config/endpoint/name/{}".format(self.mac), headers=headers)
         res = conn.getresponse()
         data = res.read()
-        #print("Status: {}".format(res.status))
+        print("Endpoint_MAC api get id Status: {}".format(res.status))
         #print("Header:\n{}".format(res.headers))
         #print("Body:\n{}".format(data.decode("utf-8")))
 
-        if data.decode("utf-8")=='':
+        if res.status == 404:
             return None
         else:
             Body_info = data.decode("utf-8")
@@ -61,7 +61,7 @@ class Endpoint_MAC:
         data = res.read()
 
 
-        print("Status: {}".format(res.status))
+        print("Endpoint_MAC api delete mac Status: {}".format(res.status))
         if res.status == 404:
             print("no have mac {}".format(self.mac))
         elif res.status == 204:
@@ -80,11 +80,11 @@ class internaluser:
         conn.request("GET", "/ers/config/internaluser/name/{}".format(self.mac), headers=headers)
         res = conn.getresponse()
         data = res.read()
-        print("Status: {}".format(res.status))
-        print("Header:\n{}".format(res.headers))
-        print("Body:\n{}".format(data.decode("utf-8")))
+        print("internaluser api get id Status:  {}".format(res.status))
+        #print("Header:\n{}".format(res.headers))
+        #print("Body:\n{}".format(data.decode("utf-8")))
 
-        if data.decode("utf-8")=='':
+        if res.status == 404:
             return None
         else:
             Body_info = data.decode("utf-8")
@@ -97,7 +97,7 @@ class internaluser:
         data = res.read()
 
 
-        print("Status: {}".format(res.status))
+        print("internaluser api delete Status: {}".format(res.status))
         if res.status == 404:
             print("no have mac {}".format(self.mac))
         elif res.status == 204:
